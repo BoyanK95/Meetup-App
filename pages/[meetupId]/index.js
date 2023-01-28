@@ -36,7 +36,7 @@ export async function getStaticPaths() {
   client.close()
 
   return {
-    fallback: true,
+    fallback: 'blocking',
     paths: meetups.map((meetup) => ({
       params: { meetupId: meetup._id.toString() },
     })),
@@ -55,7 +55,6 @@ export async function getStaticProps(context) {
   const meetupCollection = db.collection("meetups");
 
   const selectedMeetup = await meetupCollection.findOne({_id: ObjectId(meetupId)})
-  console.log(selectedMeetup);
 
   client.close()
 
